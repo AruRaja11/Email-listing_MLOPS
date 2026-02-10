@@ -1,11 +1,11 @@
-name: CD - Deploy App
+name: App Validation
 
 on:
 push:
-branches: [ "main" ]
+branches: [ main ]
 
 jobs:
-deploy:
+validate-app:
 runs-on: ubuntu-latest
 
 steps:
@@ -18,15 +18,9 @@ steps:
     python-version: "3.11"
 
 - name: Install dependencies
-  run: |
-    pip install -r requirements.txt
+  run: pip install -r requirements.txt
 
-- name: Run Training
-  run: |
-    zenml init || true
-    python run_pipeline.py
-
-- name: Start Streamlit (Build Check)
+- name: Start App (Crash Test)
   run: |
     streamlit run streamlit_app.py --server.headless true &
     sleep 25

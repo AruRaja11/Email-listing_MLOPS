@@ -9,7 +9,6 @@ jobs:
 train-test:
 runs-on: ubuntu-latest
 
-```
 steps:
 - name: Checkout Repository
   uses: actions/checkout@v4
@@ -37,4 +36,3 @@ steps:
 - name: Run Training Pipeline
   run: |
     python run_pipeline.py
-```

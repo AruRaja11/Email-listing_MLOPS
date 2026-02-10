@@ -1,60 +1,37 @@
-name: MLOps Pipeline
+name: Email Listing MLOps
 
 on:
 push:
-branches: [ main ]
+branches:
+- main
 
 jobs:
-run-pipeline:
+pipeline:
 runs-on: ubuntu-latest
 
-```
 steps:
-- name: Checkout Repository
-  uses: actions/checkout@v4
+  - name: Get repository
+    uses: actions/checkout@v4
 
-- name: Setup Python
-  uses: actions/setup-python@v5
-  with:
-    python-version: "3.11"
+  - name: Install Python
+    uses: actions/setup-python@v5
+    with:
+      python-version: "3.11"
 
-- name: Install OS dependencies
-  run: |
-    sudo apt-get update
-    sudo apt-get install -y build-essential python3-dev
+  - name: Install dependencies
+    run: |
+      python -m pip install --upgrade pip
+      pip install -r requirements.txt
 
-- name: Install Python dependencies
-  run: |
-    pip install --upgrade pip
-    pip install -r requirements.txt
+  - name: Setup ZenML
+    run: |
+      zenml init
+      zenml integration install mlflow -y
 
-- name: Setup project folders
-  run: |
-    mkdir -p artifacts
-    mkdir -p data
-    mkdir -p saved_models
+  - name: Train pipeline
+    run: python run_pipeline.py
 
-- name: Initialize ZenML
-  run: |
-    zenml init
-    zenml integration install mlflow -y
-
-- name: Download NLP resources (if used)
-  run: |
-    python - <<EOF
-    import nltk
-    try:
-        nltk.download('punkt')
-        nltk.download('stopwords')
-    except:
-        pass
-    EOF
-
-- name: Run Training Pipeline
-  run: python run_pipeline.py
-
-- name: Validate App
-  run: |
-    streamlit run streamlit_app.py --server.headless true &
-    sleep 20
-```
+  - name: Test Streamlit app
+    run: |
+      streamlit run streamlit_app.py --server.headless true &
+      sleep 20

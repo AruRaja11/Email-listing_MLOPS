@@ -25,4 +25,4 @@ mlflow==2.13.2
 # =========================
 # Critical Compatibility Fix
 # =========================
-pydantic==1.10.15
+pydantic

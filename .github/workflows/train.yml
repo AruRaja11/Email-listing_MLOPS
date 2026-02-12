@@ -1,33 +1,35 @@
 name: CD - Deploy App
 
 on:
-push:
-branches: [ "main" ]
+  push:
+    branches: [ "main" ]
 
 jobs:
-deploy:
-runs-on: ubuntu-latest
+  deploy:
+    runs-on: ubuntu-latest
 
-steps:
-- name: Checkout
-  uses: actions/checkout@v4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-- name: Setup Python
-  uses: actions/setup-python@v5
-  with:
-    python-version: "3.11"
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
-- name: Install dependencies
-  run: |
-    pip uninstall -y pydantic || true
-    pip install -r requirements.txt
+      - name: Install dependencies
+        run: |
+          pip uninstall -y pydantic || true
+          pip install "pydantic<2.0.0"
+          pip install -r requirements.txt
+          pip freeze | grep pydantic
 
-- name: Run Training
-  run: |
-    zenml init || true
-    python run_pipeline.py
+      - name: Run Training
+        run: |
+          zenml init || true
+          python run_pipeline.py
 
-- name: Start Streamlit (Build Check)
-  run: |
-    streamlit run streamlit_app.py --server.headless true &
-    sleep 25
+      - name: Start Streamlit (Build Check)
+        run: |
+          streamlit run streamlit_app.py --server.headless true &
+          sleep 25

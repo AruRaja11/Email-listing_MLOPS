@@ -21,8 +21,14 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install "pydantic<2.0.0"
+          # Uninstall any existing pydantic versions first
+          pip uninstall pydantic -y 
+          # Install the exact version ZenML needs
+          pip install "pydantic<2.0.0" 
+          # Install your other requirements
           pip install -r requirements.txt
+          # Verify the version for debugging
+          pip show pydantic
 
       - name: Initialize ZenML
         run: |

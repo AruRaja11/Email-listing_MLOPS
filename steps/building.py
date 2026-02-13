@@ -3,12 +3,13 @@ from zenml import step
 from src.model_building import BuildModel, TrainModel
 import tensorflow as tf
 from typing import Tuple, Annotated
+from tensorflow.keras.models import Model
 import mlflow
 
 
 @step(experiment_tracker="mlflow_tracker", enable_cache=False)
 def building_model(tokenizer, data) -> Tuple[
-    tf.keras.Model,
+    Model,
     dict,
     float
 ]:

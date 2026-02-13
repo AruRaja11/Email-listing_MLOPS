@@ -33,7 +33,12 @@ jobs:
 
       - name: Initialize ZenML
         run: |
-          zenml init || true
+          zenml init
+          zenml integration install mlflow -y
+          zenml experiment-tracker register mlflow_tracker --flavor=mlflow
+          zenml model-registry register mlflow_registry --flavor=mlflow
+          zenml stack register ci_stack -e mlflow_tracker -r mlflow_registry -o default -a default
+          zenml stack set ci_stack
 
       - name: Run Training Pipeline
         run: |

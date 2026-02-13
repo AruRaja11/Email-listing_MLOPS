@@ -21,10 +21,11 @@ jobs:
         run: |
           pip install -r requirements.txt
           zenml integration install mlflow tensorflow -y
-          pip install --upgrade typing-extensions>=4.10.0
           pip uninstall -y pydantic
           pip install "pydantic<2.0.0"
+          pip install --upgrade "typing-extensions>=4.10.0"
           pip freeze | grep pydantic
+          pip show typing-extensions
 
       - name: Run Training
         run: |

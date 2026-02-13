@@ -20,15 +20,14 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip uninstall -y pydantic || true
+          zenml integration install mlflow tensorflow -y
+          pip uninstall -y pydantic
           pip install "pydantic<2.0.0"
           pip freeze | grep pydantic
 
       - name: Run Training
         run: |
           zenml init
-          zenml integration install mlflow tensorflow -y
-          pip install "pydantic<2.0.0"
           zenml experiment-tracker register mlflow_tracker --flavor=mlflow
           zenml model-registry register mlflow_registry --flavor=mlflow
           zenml stack register ci_stack -e mlflow_tracker -r mlflow_registry -o default -a default

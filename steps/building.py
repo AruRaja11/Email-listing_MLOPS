@@ -8,9 +8,9 @@ import mlflow
 
 @step(experiment_tracker="mlflow_tracker", enable_cache=False)
 def building_model(tokenizer, data) -> Tuple[
-    Annotated[tf.keras.Model,"model"],
-    Annotated[dict, "model_info"],
-    Annotated[float, "loss"]
+    tf.keras.Model,
+    dict,
+    float
 ]:
     try:
         builder = BuildModel()

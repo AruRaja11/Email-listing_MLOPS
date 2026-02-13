@@ -10,9 +10,9 @@ from sklearn.preprocessing import LabelEncoder
 
 @step
 def preprocess_data(data: pd.DataFrame) -> Tuple[
-        Annotated[Tokenizer, "email_tokenizer"],
-        Annotated[LabelEncoder, "encoder"],
-        Annotated[pd.DataFrame, "preprocessed_data"]
+        Tokenizer,
+        LabelEncoder,
+        pd.DataFrame
     ]:
     try:
         clean_dataframe = CleanData()

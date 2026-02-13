@@ -1,10 +1,9 @@
-import logging 
 import tensorflow as tf
 import numpy as np
 from tensorflow import keras 
-from keras.layers import Input, Dense, Dropout, Embedding, GlobalAveragePooling1D, Concatenate
+from tensorflow.keras.layers import Input, Dense, Dropout, Embedding, GlobalAveragePooling1D, Concatenate
 from abc import ABC, abstractmethod
-from keras.models import Model
+from tensorflow.keras.models import Model
 import mlflow
 
 

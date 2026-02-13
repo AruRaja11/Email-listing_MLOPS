@@ -27,7 +27,7 @@ jobs:
       - name: Run Training
         run: |
           zenml init
-          zenml integration install mlflow -y
+          zenml integration install mlflow tensorflow -y
           pip install "pydantic<2.0.0"
           zenml experiment-tracker register mlflow_tracker --flavor=mlflow
           zenml model-registry register mlflow_registry --flavor=mlflow

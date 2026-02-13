@@ -7,8 +7,11 @@ from tensorflow.keras.models import Model
 import mlflow
 
 
+from tensorflow.keras.preprocessing.text import Tokenizer
+import pandas as pd
+
 @step(experiment_tracker="mlflow_tracker", enable_cache=False)
-def building_model(tokenizer, data) -> Tuple[
+def building_model(tokenizer: Tokenizer, data: pd.DataFrame) -> Tuple[
     Model,
     dict,
     float

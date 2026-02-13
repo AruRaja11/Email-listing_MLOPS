@@ -3,7 +3,6 @@ from zenml import pipeline
 from steps.ingestion import ingest_data
 from steps.preprocessing import preprocess_data
 from steps.building import building_model
-from steps.evaluation import evaluate
 
 
 @pipeline
